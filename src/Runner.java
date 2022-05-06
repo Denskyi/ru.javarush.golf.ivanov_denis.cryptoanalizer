@@ -1,9 +1,7 @@
-import java.util.HashMap;
 import java.util.Scanner;
-
-public class Runner {//https://github.com/Denskyi/ru.javarush.golf.ivanov_denis.cryptoanalizer.git
-    public static void main(String[] args) {
-        /*Запасной не кодированный текст
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+/*Запасной не кодированный текст
 Мы созданы нашими генами.
 Мы, животные, существуем, чтобы сохранить их, и служим лишь машинами, обеспечивающими их выживание.
 Мир эгоистичного гена — это мир жестокой конкуренции, безжалостной эксплуатации и обмана.
@@ -13,24 +11,55 @@ public class Runner {//https://github.com/Denskyi/ru.javarush.golf.ivanov_denis.
 И он лелеет надежду, что вид Homo sapiens — единственный на всем земном шаре — в силах взбунтоваться против намерений эгоистичного гена.
 Перевод сверен по юбилейному английскому изданию 2006 года.
          */
-        System.out.println("Введите число от 0 до 99999");
-        int offset = reading_number();
-        Encoder encoder = new Encoder(offset);
-        Decoder decoder = new Decoder(offset);
-        LetterMap map = new LetterMap();
-        HashMap<Character, Character> map1 = map.getMap(offset);
+public class Runner {//https://github.com/Denskyi/ru.javarush.golf.ivanov_denis.cryptoanalizer.git
+    public static void main(String[] args) {
+        int offset = 0;
+            System.out.println("Выбор действия:");
+            System.out.println("1. Шифровать файл шифром цезаря");
+            System.out.println("2. Расшифровать файл после шифра цезаря");
+            System.out.println("3. Режим bruteforce");
+        switch (reading_number()) {
+            case 1 -> {
+                System.out.println("Теперь число для шифрования");
+                offset = reading_number();
+                System.out.println("Шифруем");
+                Encoder encoder = new Encoder(offset);
+            }
+            case 2 -> {
+                System.out.println("Теперь число для расшифровки");
+                offset = reading_number();
+                System.out.println("Расшифруем");
+                Decoder decoder = new Decoder(offset);
+            }
+            case 3 -> {
+                System.out.println("Поиск решения ещё не реализован");
 
+            }
+        }
     }
 
-    public static int reading_number() {
-        int read;
+    public static int reading_number() {//пытаемся получить число с клавиатуры
+        int read = 0;
+        Scanner scanner = new Scanner(System.in);
         while (true) {
-            try (Scanner scanner = new Scanner(System.in);) {
-                read = (Integer.parseInt(scanner.nextLine()) % 99999);//%99999 Должен убрать возможность выйти из диапазона UTF8 более одного раза
-                break;
-            } catch (Exception e) {
-                System.out.println("Введено не число");}
+            System.out.println("Введите число");
+            String str = scanner.nextLine();
+            if (!str.isEmpty()) {
+                Pattern pat = Pattern.compile("\\d");//Регулярное выражение \d выдаёт true если находит только числа
+                Matcher mat = pat.matcher(str);//Тут проверяем текст на наличие там чисел
+                boolean found = mat.matches();//здесь получим true если в полученном тексте были только числа
+                if (found) {
+                    read = (Integer.parseInt(str) % 99999);//%99999 Должен убрать возможность выйти из диапазона UTF8 более одного раза
+                    break;//выход из бесконечного цикла, если число соответствует требованием
+                } else {System.out.println("Это не подходит :_(");}
+            } else {System.out.println("Это не подходит :_(");}
         }
         return read;
+    }
+    public static String pathFile() {
+        try (Scanner scanner = new Scanner(System.in)) {
+
+        }
+        return "";
     }
 }
