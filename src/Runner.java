@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 Перевод сверен по юбилейному английскому изданию 2006 года.
 ///home/denskyi/Documents/file1.txt
          */
-public class Runner {//https://github.com/Denskyi/ru.javarush.golf.ivanov_denis.cryptoanalizer.git
+public class Runner {//https://github.com/Denskyi/ru.javarush.golf.ivanov_denis.cryptoanalizer
     public static void main(String[] args) {
         int offset = 0;
         String unencryptedFile = "/home/denskyi/IdeaProjects/ru.javarush.golf.ivanov_denis.cryptoanalizer/src/unencryptedFile.txt";//путь к файлу для моего компа
@@ -83,12 +83,12 @@ public class Runner {//https://github.com/Denskyi/ru.javarush.golf.ivanov_denis.
     public static String pathFile2(String file1) {
         String file2 = "file2";
         try  {
-            Path pathFile = Paths.get(file1).getParent().resolve("file2.txt");
-            if (Files.exists(pathFile)) {
-                Files.delete(pathFile);
+            Path pathFile = Paths.get(file1).getParent().resolve("file2.txt");//Получаем путь для нового файла
+            if (Files.exists(pathFile)) {//Если файл уже существует
+                Files.delete(pathFile);//Удалить этот файл
             }
-            file2 = pathFile.toString();
-            Files.createFile(pathFile);
+            file2 = pathFile.toString();//переменная для пути к файлу для нового файла
+            Files.createFile(pathFile);//Создаём новый файл
         } catch (Exception e) {
             System.out.println(e.getStackTrace());
         }
