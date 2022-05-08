@@ -32,7 +32,9 @@ public class Runner {//https://github.com/Denskyi/ru.javarush.golf.ivanov_denis.
                 Decoder decoder = new Decoder(offset);
             }
             case 3 -> {
-                System.out.println("Поиск решения ещё не реализован");
+                System.out.println("Вычисляем");
+                BruteforceMode bruteforceMode = new BruteforceMode();
+                Decoder decoder = new Decoder(bruteforceMode.BruteforceMode());
 
             }
         }
@@ -57,9 +59,8 @@ public class Runner {//https://github.com/Denskyi/ru.javarush.golf.ivanov_denis.
         return read;
     }
     public static String pathFile() {
-        try (Scanner scanner = new Scanner(System.in)) {
-
-        }
-        return "";
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите путь к файлу");
+        return scanner.nextLine();
     }
 }

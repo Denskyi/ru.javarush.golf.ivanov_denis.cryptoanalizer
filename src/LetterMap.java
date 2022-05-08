@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class LetterMap {//Унивирсальный метод, может вернуть карту ключ - значение для шифровки / дишифровки
+public class LetterMap {//Метод возвращает карту ключ - значение для шифровки / дишифровки. Без заглавных букв остался с эксперементов на начальном этапе
     private HashMap<Character, Character> map = new HashMap<>();
     public HashMap<Character, Character> getMap(int offset) {//offset определяет выбранное смещение для шифрования
         for (int i = 0; i < 32; i++) {
