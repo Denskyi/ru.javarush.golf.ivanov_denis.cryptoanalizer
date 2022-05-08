@@ -1,3 +1,7 @@
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,10 +14,13 @@ import java.util.regex.Pattern;
 Ни в коем случае! Докинз показывает, что эгоистичный ген — это еще и хитрый ген.
 И он лелеет надежду, что вид Homo sapiens — единственный на всем земном шаре — в силах взбунтоваться против намерений эгоистичного гена.
 Перевод сверен по юбилейному английскому изданию 2006 года.
+///home/denskyi/Documents/file1.txt
          */
 public class Runner {//https://github.com/Denskyi/ru.javarush.golf.ivanov_denis.cryptoanalizer.git
     public static void main(String[] args) {
         int offset = 0;
+        String unencryptedFile = "/home/denskyi/IdeaProjects/ru.javarush.golf.ivanov_denis.cryptoanalizer/src/unencryptedFile.txt";//путь к файлу для моего компа
+        String encryptedFile = "/home/denskyi/IdeaProjects/ru.javarush.golf.ivanov_denis.cryptoanalizer/src/encryptedFile.txt";//путь к файлу для моего компа
             System.out.println("Выбор действия:");
             System.out.println("1. Шифровать файл шифром цезаря");
             System.out.println("2. Расшифровать файл после шифра цезаря");
@@ -22,19 +29,23 @@ public class Runner {//https://github.com/Denskyi/ru.javarush.golf.ivanov_denis.
             case 1 -> {
                 System.out.println("Теперь число для шифрования");
                 offset = reading_number();
-                System.out.println("Шифруем");
-                Encoder encoder = new Encoder(offset);
+                unencryptedFile = pathFile1();
+                encryptedFile = pathFile2(unencryptedFile);
+                Encoder encoder = new Encoder(offset,unencryptedFile,encryptedFile);
             }
             case 2 -> {
                 System.out.println("Теперь число для расшифровки");
                 offset = reading_number();
-                System.out.println("Расшифруем");
-                Decoder decoder = new Decoder(offset);
+                encryptedFile = pathFile1();
+                unencryptedFile = pathFile2(encryptedFile);
+                Decoder decoder = new Decoder(offset,unencryptedFile,encryptedFile);
             }
             case 3 -> {
-                System.out.println("Вычисляем");
                 BruteforceMode bruteforceMode = new BruteforceMode();
-                Decoder decoder = new Decoder(bruteforceMode.BruteforceMode());
+                encryptedFile = pathFile1();
+                unencryptedFile = pathFile2(encryptedFile);
+                offset = bruteforceMode.BruteforceMode(encryptedFile);
+                Decoder decoder = new Decoder(offset,unencryptedFile,encryptedFile);
 
             }
         }
@@ -58,9 +69,29 @@ public class Runner {//https://github.com/Denskyi/ru.javarush.golf.ivanov_denis.
         }
         return read;
     }
-    public static String pathFile() {
-        Scanner scanner = new Scanner(System.in);
+    public static String pathFile1() {//Пытаемся получить файлик1
         System.out.println("Введите путь к файлу");
-        return scanner.nextLine();
+        Scanner scanner = new Scanner(System.in);
+        String file = scanner.nextLine();//читаем путь к новому файлу
+        Path filePath = Paths.get(file);//читаем путь к файлу
+        if (Files.notExists(filePath)) {//если файла нету, то пишем об этом
+                System.out.println("Файл не найден");
+        }
+        return file;
+    }
+
+    public static String pathFile2(String file1) {
+        String file2 = "file2";
+        try  {
+            Path pathFile = Paths.get(file1).getParent().resolve("file2.txt");
+            if (Files.exists(pathFile)) {
+                Files.delete(pathFile);
+            }
+            file2 = pathFile.toString();
+            Files.createFile(pathFile);
+        } catch (Exception e) {
+            System.out.println(e.getStackTrace());
+        }
+        return file2;
     }
 }

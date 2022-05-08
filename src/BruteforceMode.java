@@ -3,11 +3,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class BruteforceMode {
-    private String unencryptedFile = "/home/denskyi/IdeaProjects/ru.javarush.golf.ivanov_denis.cryptoanalizer/src/unencryptedFile";
-    private String encryptedFile = "/home/denskyi/IdeaProjects/ru.javarush.golf.ivanov_denis.cryptoanalizer/src/encryptedFile";
     private int offset;//результирующий сдвиг
 
-    public int BruteforceMode() {
+    public int BruteforceMode(String encryptedFile) {
+        System.out.println("Вычисляем");
         this.offset = 0;
         try (FileReader readFile = new FileReader(encryptedFile)) {
             int previousСharacter = 0;//код предыдущего символа
@@ -18,7 +17,7 @@ public class BruteforceMode {
                 int read = readFile.read();
                 if (numberMatches > 3) {
                     offset = intendedShift;
-                    System.out.println(offset);
+                    System.out.println("Искомое число => " + offset);
                     break;
                 } else {
                     currentShift = read - 32;//вычисляем разницу с позицией пробела

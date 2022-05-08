@@ -2,9 +2,8 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Encoder{
-    private String unencryptedFile = "/home/denskyi/IdeaProjects/ru.javarush.golf.ivanov_denis.cryptoanalizer/src/unencryptedFile";
-    private String encryptedFile = "/home/denskyi/IdeaProjects/ru.javarush.golf.ivanov_denis.cryptoanalizer/src/encryptedFile";
-    public Encoder(int offset) {
+    public Encoder(int offset, String unencryptedFile, String encryptedFile) {
+        System.out.println("Шифруем");
         try (FileReader readFile = new FileReader(unencryptedFile);
              FileWriter writeFile = new FileWriter(encryptedFile);) {
             while (readFile.ready()) {//шифруется абсолютно любой символ
@@ -18,7 +17,7 @@ public class Encoder{
                 }
             }
         } catch (IOException e) {
-            System.out.println("Exceptions");
+            System.out.println(e.getStackTrace());
         }
     }
 

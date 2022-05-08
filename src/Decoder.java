@@ -3,10 +3,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Decoder {
-    private String unencryptedFile = "/home/denskyi/IdeaProjects/ru.javarush.golf.ivanov_denis.cryptoanalizer/src/unencryptedFile";
-    private String encryptedFile = "/home/denskyi/IdeaProjects/ru.javarush.golf.ivanov_denis.cryptoanalizer/src/encryptedFile";
-
-    public Decoder(int offset) {
+    public Decoder(int offset, String unencryptedFile, String encryptedFile) {
+        System.out.println("Расшифруем");
         try (FileReader readFile = new FileReader(encryptedFile);
              FileWriter writeFile = new FileWriter(unencryptedFile);) {
             while (readFile.ready()) {//Дешифруется по выбранному параметру offset абсолютно любой символ
@@ -20,7 +18,7 @@ public class Decoder {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Exceptions");
+            System.out.println(e.getStackTrace());
         }
     }
 }
